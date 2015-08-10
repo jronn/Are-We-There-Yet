@@ -149,4 +149,12 @@ class DestinationRouteManager : NSObject, CLLocationManagerDelegate {
             return timeRemaining
         }
     }
+    
+    func getDestination() -> String {
+        var name:String = MKMapItem(placemark: destination).name!
+        if name.characters.count > 10 {
+            name = name.substringToIndex(advance(name.startIndex,14))
+        }
+        return name + ".."
+    }
 }

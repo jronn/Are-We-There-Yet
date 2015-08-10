@@ -13,7 +13,7 @@ class CustomSearchBar:UISearchBar {
     
     var textField:UITextField!
     
-    required init(coder aDecoder:NSCoder) {
+    required init?(coder aDecoder:NSCoder) {
         super.init(coder:aDecoder)
         textField = self.valueForKey("searchField") as? UITextField
         

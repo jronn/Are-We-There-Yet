@@ -35,6 +35,8 @@ class SettingsViewController:UITableViewController {
     override func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         let header: UITableViewHeaderFooterView = view as! UITableViewHeaderFooterView
         header.textLabel?.textColor = UIColor.whiteColor()
+        tableView.backgroundColor = UIColor.blackColor()
+        
     }
     
     private func loadSettingValues() {

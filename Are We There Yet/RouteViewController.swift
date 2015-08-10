@@ -127,7 +127,7 @@ class RouteViewController: UIViewController,CLLocationManagerDelegate, MKMapView
     }
     
     
-    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [AnyObject]) {
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
         if(destRouteManager.isReady()) {
             destRouteManager.update(manager)
@@ -148,9 +148,9 @@ class RouteViewController: UIViewController,CLLocationManagerDelegate, MKMapView
             
             if showDistance {
                 if unitType == "km" {
-                    infoText += formatter.stringFromNumber(round(destRouteManager.getDistanceRemaining()/1000))! + " km remaining"
+                    infoText += formatter.stringFromNumber(round(destRouteManager.getDistanceRemaining()/1000))! + " km to " + destRouteManager.getDestination()
                 } else {
-                    infoText += formatter.stringFromNumber(round(destRouteManager.getDistanceRemaining() * 0.00062137))! + " miles remaining"
+                    infoText += formatter.stringFromNumber(round(destRouteManager.getDistanceRemaining() * 0.00062137))! + " miles to " + destRouteManager.getDestination()
                 }
             }
             
@@ -158,7 +158,15 @@ class RouteViewController: UIViewController,CLLocationManagerDelegate, MKMapView
                 if showDistance {
                     infoText += "\n"
                 }
-                infoText += "ETA: " + String(round(destRouteManager.getTimeRemaining()/60)) + " min "
+                let time = destRouteManager.getTimeRemaining()
+                let hours = floor((time / (60*60)))
+                let minutes = floor((time / 60) % 60)
+                
+                if hours > 0 {
+                    infoText += "ETA: " + formatter.stringFromNumber(hours)! + "h " + formatter.stringFromNumber(minutes)! + " min"
+                } else {
+                    infoText += "ETA: " + formatter.stringFromNumber(minutes)! + " min"
+                }
             }
             
             infoLabel.text = infoText

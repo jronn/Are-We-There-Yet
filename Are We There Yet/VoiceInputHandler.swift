@@ -65,7 +65,7 @@ class VoiceInputHandler: NSObject,OEEventsObserverDelegate {
         
         let input = split(hypothesis.characters){$0 == " "}.map{String($0)}
         
-        for i in 0..<input.count {
+        inputLoop: for i in 0..<input.count {
             if input[i] == "AREWETHEREYET" {
                 let time = destRouteManager.getTimeRemaining()
                 let hours = floor((time / (60*60)))
@@ -96,7 +96,8 @@ class VoiceInputHandler: NSObject,OEEventsObserverDelegate {
                 myUtterance.rate = 0.15
                 myUtterance.volume = NSUserDefaults.standardUserDefaults().floatForKey("volume")
                 synth.speakUtterance(myUtterance)
-                break
+                
+                break inputLoop
             }
         }
     }
